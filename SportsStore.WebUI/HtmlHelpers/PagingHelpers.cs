@@ -1,0 +1,49 @@
+﻿using System;
+using System.Text;
+using System.Web.Mvc;
+using SportsStore.WebUI.Models;
+namespace SportsStore.WebUI.HtmlHelpers
+{
+    public static class PagingHelpers
+    {
+        public static MvcHtmlString PageLinks(this HtmlHelper nazwa_html, PagingInfo pagingInfo, Func<int, string> pageUrl)
+        {
+            StringBuilder result = new StringBuilder();
+            for (int i = 1; i <= pagingInfo.TotalPages; i++)
+            {
+                TagBuilder tag = new TagBuilder("a");
+                tag.MergeAttribute("href", pageUrl(i));
+                tag.InnerHtml = i.ToString();
+                if (i == pagingInfo.CurrentPage)
+                {
+                    tag.AddCssClass("selected");
+                    tag.AddCssClass("btn-primary");
+                }
+                tag.AddCssClass("btn btn-default");
+                result.Append(tag.ToString());           
+            }
+            return MvcHtmlString.Create(result.ToString());
+        }
+
+        //public static MvcHtmlString InfoLinks(this HtmlHelper nazwa_html, InfoDataHtml infodata, Func<int, string> parm)
+        //{
+        //    StringBuilder result = new StringBuilder();
+          
+        //    for (int i = 1; i <= infodata.Countpage; i++)
+        //    {
+        //        TagBuilder tag = new TagBuilder("a");
+        //        tag.MergeAttribute("href", parm(i));
+        //        tag.InnerHtml = i.ToString();
+        //        if (i == infodata.Curentpage)
+        //        {
+        //            tag.AddCssClass("selected");
+        //            tag.AddCssClass("btn-primary");
+        //        }
+        //        tag.AddCssClass("btn btn-default");
+        //        result.Append(tag.ToString());
+        //    }
+        //    return MvcHtmlString.Create(result.ToString());
+        //}
+
+    }
+}

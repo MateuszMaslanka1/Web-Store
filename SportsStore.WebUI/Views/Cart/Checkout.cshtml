@@ -1,0 +1,39 @@
+﻿@model SportsStore.Domain.Entities.ShoppingDetailscs
+
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<h2>Wysyłka</h2>
+
+@Html.BeginForm("Checkout", "Cart")
+{
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.name)
+        @Html.TextBoxFor(x => x.name, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.surname)
+        @Html.TextBoxFor(x => x.surname, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.street)
+        @Html.TextBoxFor(x => x.street, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.city)
+        @Html.TextBoxFor(x => x.city, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.zip)
+        @Html.TextBoxFor(x => x.zip, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.DisplayNameFor(x => x.country)
+        @Html.TextBoxFor(x => x.country, new { @class = "form-control" })
+    </div>
+    <div class="text-center">
+        <input class="btn btn-primary" type="submit" value="Zakończ zamówienie" />
+    </div>
+ }
+

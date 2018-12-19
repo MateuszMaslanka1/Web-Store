@@ -1,0 +1,119 @@
+﻿@model SportsStore.WebUI.Models.CartIndexViewModel
+@{
+    ViewBag.Title = "Sklep sportowy: Twój koszyk";
+}
+<h2>Twój koszyk</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Ilość</th>
+            <th>Produkt</th>
+            <th class="text-right">Cena</th>
+            <th class="text-right">Wartość</th>
+            <th class="text-right">Cena ze zniżką</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in  Model.Card.Lines)
+         {
+        <tr>
+
+            <td class="text-center">@line.Quantity</td>
+            <td class="text-left">@line.Product.Name</td>
+            <td class="text-right">@line.Product.Price.ToString("c")</td>
+            <td class="text-right">@((line.Quantity * line.Product.Price).ToString("c"))</td>
+
+            @*<td>
+                @using (Html.BeginForm("GetDiscount", "Cart"))
+                {  
+                   @Html.Hidden("ProductId", line.Product.ProductID)
+                   @Html.HiddenFor(x => x.ReturnUrl)
+                   <input type="submit" class="btn btn-success" value="Rabat" />                     
+                }
+                
+            </td>*@
+
+             <td>
+                @using (Html.BeginForm("RemoveFromCart", "Cart"))
+                {
+                    @Html.Hidden("ProductID", line.Product.ProductID)
+                    @Html.HiddenFor(x => x.ReturnUrl)
+                    <input class="btn btn-sm btn-warning" type="submit" value="Usuń" />
+                }
+            </td> 
+            @*<td>
+                @using (Html.BeginForm("Rabate", "Cart"))
+                {
+                    @Html.Hidden("ProductID", line.Product.ProductID)
+                    @Html.HiddenFor(x => x.ReturnUrl)
+                    <input class="btn btn-sm btn-warning" type="submit" value="Usuń" />
+                }
+            </td>*@
+        </tr>
+         }
+           
+        
+    </tbody>
+    <tfoot>
+        <tr>  
+               <td>
+                @using (Html.BeginForm("Rabate", "Cart"))
+                {
+                    foreach (var line in Model.Card.Lines)
+                    {
+                        if(line.licznik_rabate == 1)
+                        {
+                            <p>kod został już wykorzystany</p>
+                            break;
+                        }
+                    }
+                    //@Html.Hidden("ProductID", )
+                      @Html.TextBoxFor(x => x.Code)
+                      @Html.HiddenFor(x => x.ReturnUrl);
+                      <input class="btn btn-sm btn-warning" type="submit" value="Rabat" />
+                }
+               </td>
+            
+            
+            @* @using (Html.BeginForm()) {
+         <p>@Html.TextBoxFor(x => x.discount)</p>
+
+        <td colspan="3" class="text-right">Razem:</td>
+        <td class="text-right">
+            @if (Model.discount == "promo")
+             {
+                @Model.Card.Rebate().ToString("c")
+             }
+             else
+             {
+                @Model.Card.ComputeTotalValue().ToString("c")
+             }
+                 <input type="submit" class="btn btn-success" value="Rabat" />
+        </td>
+        }*@
+
+            @*@foreach (var line in Model.Card.Lines)
+        {
+           <td>
+           @using (Html.BeginForm("GetDiscount", "Cart"))
+           {
+               @Html.Hidden("ProductId", line.Product.ProductID)
+               @Html.HiddenFor(x => x.ReturnUrl)
+               <input class="btn btn-sm btn-warning" type="submit" value="Rabat"/>
+            }
+           </td>
+        }*@
+
+            @*<td colspan="3" class="text-right">Razem:</td>
+        <td>
+            @Model.Card.ComputeTotalValue().ToString("c")
+        </td*@>
+
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="@Model.ReturnUrl">Kontynuuj zakupy</a>
+    @Html.ActionLink("Złóż zamówienie", "Checkout"," ", new { @class = "btn btn-primary" })
+
+</div>

@@ -1,0 +1,16 @@
+﻿@model SportsStore.WebUI.Models.ProductsListViewModel
+
+@{
+    ViewBag.Title = "Produkty";
+}
+
+@foreach (var p in Model.Products)
+{
+    @Html.Partial("ProductSummary", p);
+}
+@Html.RouteLink("sortuj rosnąco po cenie", new { controller = "Product", action = "List", sort = "Price" }, new  { @class = "btn btn-block btn-default btn-lg" })
+@Html.RouteLink("sortuj malejąco po cenie", new { controller = "Product", action = "List", sort = "PriceDesc" }, new { @class = "btn btn-block btn-default btn-lg" })
+
+<div class="btn-group pull-right">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("List", new { page = x, category = Model.CurrentCategory }))
+</div>

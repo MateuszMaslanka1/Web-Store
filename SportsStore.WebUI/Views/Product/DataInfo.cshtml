@@ -1,0 +1,20 @@
+﻿@model SportsStore.WebUI.Models.InfosDataViewModel
+
+@{
+    ViewBag.Title = "DataInfo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="btn-group pull-right">
+    @Html.InfoLinks(Model.InfoDataHtml, x => Url.Action("DataInfo", new { page = x }))
+</div>
+@foreach (var p in Model.Infoes)
+{
+    <div>
+        <h3>@p.Name</h3>
+        @p.Surename
+        <h4>@p.Age.ToString("c")</h4>
+    </div>
+}
+
+<h2>DataInfo</h2>
+
